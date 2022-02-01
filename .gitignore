@@ -12,7 +12,6 @@ compile_commands.json
 .vimrc
 compile_commands.json
 build/
-thirdparty/
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)
