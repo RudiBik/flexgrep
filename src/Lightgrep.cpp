@@ -57,9 +57,6 @@ void Lightgrep::processRegular(const path &p) {
         return;
     }
 
-    if(mOptions->mSkipBinaries && pFile->mMetaData.binary)
-        return;
-
 	if(passesMetaFilters(pFile->mMetaData)) {
         if(!pFile->loadContent())
         {
