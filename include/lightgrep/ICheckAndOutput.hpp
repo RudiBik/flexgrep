@@ -1,6 +1,7 @@
 #pragma once
 
 #include <PathFilter/IContentFilter.hpp>
+#include <Options.hpp>
 
 #include <memory>
 #include <iostream>
@@ -22,7 +23,7 @@ public:
 
 public:
 	template <typename OutputIterator>
-	static std::unique_ptr<ICheckAndOutput> create(OutputIterator oiter, std::unique_ptr<IContentFilter> contentFilter, bool bParallel);
+	static std::unique_ptr<ICheckAndOutput> create(OutputIterator oiter, std::shared_ptr<const Options> opt);
 };
 
 

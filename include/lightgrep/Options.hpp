@@ -28,6 +28,10 @@ public:
 	std::regex mRegexContent;
 
     bool mSkipBinaries;
+
+
+    // TODO make configurable
+    bool mParallelContentFiltering{false};
 };
 
 

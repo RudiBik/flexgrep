@@ -3,8 +3,6 @@
 #include <PathFilter/FilenameFilter.hpp>
 #include <PathFilter/AlwaysMatchingFilter.hpp>
 
-#include <PathFilter/ContentRegexFilter.hpp>
-
 
 namespace lg {
 
@@ -20,12 +18,6 @@ std::vector<IMetaFilter::IMetaFilterPtr> IMetaFilter::createMetaFilters(const Op
 
 	return result;
 }
-
-
-std::unique_ptr<IContentFilter> IContentFilter::createContentFilter(const std::regex &contentRegex) {
-	return std::make_unique<ContentRegexFilter>(contentRegex);
-}
-
 
 
 } // namespace lg

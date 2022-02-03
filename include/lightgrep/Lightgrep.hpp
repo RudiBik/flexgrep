@@ -45,14 +45,7 @@ template <typename OutputIterator>
 Lightgrep::Lightgrep(std::shared_ptr<const Options> options, OutputIterator oiter) : mOptions{options}, mCurrentSymlink{} {
 	mMetaFilters = IMetaFilter::createMetaFilters(options.get());
 
-	// given to ICheckAndOutput::create after successful creation -> don't use it here
-	// TODO: instead of passing true, extract skipBinaries from Options
-	auto contentFilter = IContentFilter::createContentFilter(options->mRegexContent);
-	if(!contentFilter) {
-		// TODO: Throw exception
-	}
-
-	mCheckAndOutput = ICheckAndOutput::create(oiter, std::move(contentFilter), false);
+	mCheckAndOutput = ICheckAndOutput::create(oiter, mOptions);
 	if(!mCheckAndOutput) {
 		// TODO: Throw exception
 	}
