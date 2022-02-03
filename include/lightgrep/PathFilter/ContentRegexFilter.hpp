@@ -18,7 +18,7 @@ public:
 	//! \param contentRegex
 	//! \param skipBinaries A heuristic is used to determine if a file is a binary file. If this flag is set to true, all binary files won't pass the check
     //!------------------------------------------------
-	ContentRegexFilter(const std::regex &contentRegex, bool skipBinaries);
+	ContentRegexFilter(const std::regex &contentRegex);
 
 	virtual ~ContentRegexFilter() {}
     
@@ -43,7 +43,6 @@ private:
 
 private:
 	std::regex mContentRegex;
-	bool mSkipBinaries;
 };
 
 

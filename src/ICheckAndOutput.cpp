@@ -7,9 +7,9 @@ namespace lg {
 
 
 template <typename OutputIterator>
-std::unique_ptr<ICheckAndOutput> ICheckAndOutput::create(OutputIterator oiter, std::unique_ptr<IContentFilter> secondLvlFilter, bool bParallel) {
+std::unique_ptr<ICheckAndOutput> ICheckAndOutput::create(OutputIterator oiter, std::unique_ptr<IContentFilter> contentFilter, bool bParallel) {
 
-	return std::make_unique<SequentialCheckAndOutput<OutputIterator>>(oiter, std::move(secondLvlFilter));
+	return std::make_unique<SequentialCheckAndOutput<OutputIterator>>(oiter, std::move(contentFilter));
 }
 
 

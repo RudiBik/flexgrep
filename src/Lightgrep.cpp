@@ -45,16 +45,25 @@ void Lightgrep::processDirectory(const path &p) {
 
 
 void Lightgrep::processRegular(const path &p) {
-	if(passedFirstLvlFilter(p)) {
+    std::shared_ptr<File> pFile;
+    try
+    {
+        // Constructor loads the meta data
+        pFile = std::make_shared<File>(p);
+    }
+    catch(...)
+    {
+        // TODO: Some error or warning, file could not be opened
+        return;
+    }
 
-        std::shared_ptr<File> pFile;
-        try
+    if(mOptions->mSkipBinaries && pFile->mMetaData.binary)
+        return;
+
+	if(passesMetaFilters(pFile->mMetaData)) {
+        if(!pFile->loadContent())
         {
-            pFile = std::make_shared<File>(p);
-        }
-        catch(...)
-        {
-            // TODO: Some error or warning, file could not be opened
+            // TODO:: error or warning
             return;
         }
 
@@ -92,9 +101,9 @@ void Lightgrep::processSymlink(const path &p) {
 }
 
 
-bool Lightgrep::passedFirstLvlFilter(const path &p) const {
-	for(const auto &filter : mFirstLvlFilters) {
-		if(!filter->check(p))
+bool Lightgrep::passesMetaFilters(const File::Meta& metaData) const {
+	for(const auto &filter : mMetaFilters) {
+		if(!filter->check(metaData))
 			return false;
 	}
 

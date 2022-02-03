@@ -43,7 +43,7 @@ void SequentialCheckAndOutput<OutputIterator>::process(const std::shared_ptr<Fil
 	if(mContentFilter->check(filePtr)) {
 
 		// Output
-		(*mOutputIter) = filePtr->mPath.string() + std::string("\n");
+		(*mOutputIter) = filePtr->mMetaData.filePath.string() + std::string("\n");
 		mOutputIter++;
 	}
 }

@@ -15,7 +15,7 @@ namespace lg {
 //!----------------------------------------------- 
 class Options {
 public:
-	Options(const std::string &rootPath, const std::string &filenameWildcard, const std::string &regexContent);
+	Options(const std::string &rootPath, const std::string &filenameWildcard, const std::string &regexContent, bool skipBinaries);
 
 
 	// Enabling / Disabling optional features
@@ -26,6 +26,8 @@ public:
 
 	std::unique_ptr<Wildcard> mFilenameWildcard;
 	std::regex mRegexContent;
+
+    bool mSkipBinaries;
 };
 
 

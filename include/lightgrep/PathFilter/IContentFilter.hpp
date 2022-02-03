@@ -21,7 +21,7 @@ public:
 	virtual bool check(const std::shared_ptr<File> pFile) const=0;
 
 public:
-	static std::unique_ptr<IContentFilter> createContentFilter(const std::regex &contentRegex, bool skipBinaries);
+	static std::unique_ptr<IContentFilter> createContentFilter(const std::regex &contentRegex);
 };
 
 

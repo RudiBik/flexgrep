@@ -9,6 +9,14 @@ namespace lg {
 class File
 {
 public:
+    struct Meta
+    {
+        std::filesystem::path filePath;
+        size_t fileSize;
+        bool binary;
+        // Other metadata like permissions, ...
+    };
+public:
 	//!===============================================
 	//! \brief ...
     //! 
@@ -16,11 +24,13 @@ public:
 	//!----------------------------------------------- 
     File(const std::filesystem::path& p);
 
+    bool loadContent();
+
 	File(const File &rhs) = delete;
 	File& operator=(const File &rhs) = delete;
 
 public:
-    std::filesystem::path mPath;
+    Meta mMetaData;
     std::vector<char> mData;
 };
 

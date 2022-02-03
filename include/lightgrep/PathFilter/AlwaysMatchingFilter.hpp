@@ -2,18 +2,18 @@
 
 #include <filesystem>
 
-#include <PathFilter/IPathFilter.hpp>
+#include <PathFilter/IMetaFilter.hpp>
 
 
 namespace lg {
 
 
-class AlwaysMatchingFilter : public IPathFilter {
+class AlwaysMatchingFilter : public IMetaFilter {
 public:
 	AlwaysMatchingFilter() {}
 
 public:
-	virtual bool check(const std::filesystem::path &path) const {
+	virtual bool check(const File::Meta& metaData) const {
 		return true;
 	}
 };

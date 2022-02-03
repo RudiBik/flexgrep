@@ -11,7 +11,8 @@
 namespace lg {
 
 
-ContentRegexFilter::ContentRegexFilter(const std::regex &contentRegex, bool skipBinaries) : mContentRegex(contentRegex), mSkipBinaries(skipBinaries) {
+ContentRegexFilter::ContentRegexFilter(const std::regex &contentRegex) : mContentRegex(contentRegex)
+{
 	// TODO: Log a warning on suspicious regex
 }
 
@@ -19,16 +20,8 @@ ContentRegexFilter::ContentRegexFilter(const std::regex &contentRegex, bool skip
 
 bool ContentRegexFilter::check(const std::shared_ptr<File> pFile) const {
 
-
-	// check if the file is binary and skip it in this case
-	if(mSkipBinaries) {
-		// gcount returns the number of bytes read
-		if(isBinaryFile(&pFile->mData[0], pFile->mData.size()))
-			return false;
-	}
-
     std::stringstream reader(std::string(pFile->mData.begin(), pFile->mData.end()));
-    
+
 	std::smatch match;
 	std::string line;
 	while(std::getline(reader, line)) {

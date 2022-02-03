@@ -23,6 +23,9 @@ int main(int argc, char** argv)
         program.add_argument("-w", "--wildcard")
             .default_value<std::string>("*")
             .help("Wildcard used to match filenames: ? represents one character and * represents an arbitrary amount of characters");
+        program.add_argument("--skipBinaries")
+            .default_value<bool>(true)
+            .help("Binaries are skipped during search if true");
 
         try
         {
@@ -37,7 +40,8 @@ int main(int argc, char** argv)
 
 	std::ostream_iterator<std::string> oiter{std::cout};
 
-	auto opt = std::make_shared<lg::Options>(program.get<std::string>("root"), program.get<std::string>("--wildcard"), program.get<std::string>("regex"));
+	auto opt = std::make_shared<lg::Options>(program.get<std::string>("root"), 
+            program.get<std::string>("--wildcard"), program.get<std::string>("regex"), program.get<bool>("--skipBinaries"));
 	lg::Lightgrep lightgrep(opt, oiter);
 
 	lightgrep.searchAndOutput();
