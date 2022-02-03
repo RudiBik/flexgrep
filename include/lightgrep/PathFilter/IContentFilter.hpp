@@ -18,7 +18,7 @@ public:
 	virtual ~IContentFilter() {}
 
 public:
-	virtual bool check(const std::shared_ptr<File> pFile) const=0;
+	virtual bool check(const FileSPtr pFile) const=0;
 };
 
 

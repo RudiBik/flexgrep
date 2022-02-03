@@ -18,7 +18,7 @@ ContentRegexFilter::ContentRegexFilter(const std::regex &contentRegex) : mConten
 
 
 
-bool ContentRegexFilter::check(const std::shared_ptr<File> pFile) const {
+bool ContentRegexFilter::check(const FileSPtr pFile) const {
 
     std::stringstream reader(std::string(pFile->mData.begin(), pFile->mData.end()));
 

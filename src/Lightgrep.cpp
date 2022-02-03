@@ -45,7 +45,7 @@ void Lightgrep::processDirectory(const path &p) {
 
 
 void Lightgrep::processRegular(const path &p) {
-    std::shared_ptr<File> pFile;
+    FileSPtr pFile;
     try
     {
         // Constructor loads the meta data

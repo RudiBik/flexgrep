@@ -34,5 +34,6 @@ public:
     std::vector<char> mData;
 };
 
+using FileSPtr = std::shared_ptr<File>;
 
 } // namespace lg

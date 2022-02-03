@@ -18,7 +18,7 @@ public:
 	virtual ~ICheckAndOutput() {}
 
 public:
-	virtual void process(const std::shared_ptr<File> filePtr)=0;
+	virtual void process(const FileSPtr filePtr)=0;
 	virtual void join()=0;
 
 public:

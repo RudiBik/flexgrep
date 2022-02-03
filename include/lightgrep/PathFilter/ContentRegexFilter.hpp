@@ -31,7 +31,7 @@ public:
     //!	
 	//! \note Paths which point to nonexistent files or non-regular files will return false
     //!------------------------------------------------
-	bool check(const std::shared_ptr<File> pFile) const override;
+	bool check(const FileSPtr pFile) const override;
 
 private:
 

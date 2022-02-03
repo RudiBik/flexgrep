@@ -15,7 +15,7 @@ public:
 	virtual ~SequentialCheckAndOutput();
 
 public:
-	virtual void process(const std::shared_ptr<File> filePtr);
+	virtual void process(const FileSPtr filePtr);
 	virtual void join();
 
 private:
@@ -39,7 +39,7 @@ SequentialCheckAndOutput<OutputIterator>::~SequentialCheckAndOutput() {
 
 
 template <typename OutputIterator>
-void SequentialCheckAndOutput<OutputIterator>::process(const std::shared_ptr<File> filePtr) {
+void SequentialCheckAndOutput<OutputIterator>::process(const FileSPtr filePtr) {
 	if(mContentFilter->check(filePtr)) {
 
 		// Output
