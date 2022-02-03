@@ -2,7 +2,7 @@
 
 #include <Options.hpp>
 #include "Wildcard.cpp"
-#include "PathFilter/FilenameFilter.cpp"
+#include "PathFilter/FilenameMetaFilter.cpp"
 
 using namespace lg;
 

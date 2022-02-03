@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <PathFilter/FilenameFilter.hpp>
+#include <PathFilter/FilenameMetaFilter.hpp>
 #include <Wildcard.hpp>
 #include <Options.hpp>
 
@@ -14,20 +14,20 @@ using namespace std;
 const string filenameWildcard = "*test1?3";
 
 
-TEST(FilenameFilterTests, equalityTestTrue) {
+TEST(FilenameMetaFilterTests, equalityTestTrue) {
 	Wildcard wc(filenameWildcard);
 	auto opt = make_shared<Options>("", filenameWildcard, "", true);
-	FilenameFilter filter(*(opt->mFilenameWildcard));
+	FilenameMetaFilter filter(*(opt->mFilenameWildcard));
 
 	EXPECT_EQ(filter.check(File::Meta{"test123", 0}), wc.match("test123"));
 	EXPECT_EQ(filter.check(File::Meta{"***test123", 0}), wc.match("***test123"));
 	EXPECT_EQ(filter.check(File::Meta{"*test1?3", 0}), wc.match("*test1?3"));
 }
 
-TEST(FilenameFilterTests, inequalityTestFalse) {
+TEST(FilenameMetaFilterTests, inequalityTestFalse) {
 	Wildcard wc(filenameWildcard);
 	auto opt = make_shared<Options>("", filenameWildcard, "", true);
-	FilenameFilter filter(*(opt->mFilenameWildcard));
+	FilenameMetaFilter filter(*(opt->mFilenameWildcard));
 
 	EXPECT_EQ(filter.check(File::Meta{"test12", 0}), wc.match("test12"));
 	EXPECT_EQ(filter.check(File::Meta{"***tst123", 0}), wc.match("***tst123"));

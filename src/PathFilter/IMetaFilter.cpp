@@ -1,6 +1,6 @@
 #include <PathFilter/IMetaFilter.hpp>
 
-#include <PathFilter/FilenameFilter.hpp>
+#include <PathFilter/FilenameMetaFilter.hpp>
 #include <PathFilter/BinaryMetaFilter.hpp>
 #include <PathFilter/AlwaysMatchingFilter.hpp>
 
@@ -18,7 +18,7 @@ std::vector<IMetaFilter::IMetaFilterPtr> IMetaFilter::createMetaFilters(const Op
     }
 
 	if(options->mFilenameWildcard) {
-		auto filter = std::make_unique<FilenameFilter>(*(options->mFilenameWildcard));
+		auto filter = std::make_unique<FilenameMetaFilter>(*(options->mFilenameWildcard));
 		result.push_back(std::move(filter));
 	}
 

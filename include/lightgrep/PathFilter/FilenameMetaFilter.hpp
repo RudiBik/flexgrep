@@ -13,14 +13,14 @@ namespace lg {
 //! \brief Very basic Filter that checks only the following parameter:
 //! Filename: The filenames of all incoming paths have to match the filename wildcard from the given Options.
 //!------------------------------------------------
-class FilenameFilter : public IMetaFilter {
+class FilenameMetaFilter : public IMetaFilter {
 public:
-	FilenameFilter(const Wildcard &wildcard);
+	FilenameMetaFilter(const Wildcard &wildcard);
 
-	virtual ~FilenameFilter() {}
+	virtual ~FilenameMetaFilter() {}
 
-	FilenameFilter(const FilenameFilter &rhs) = default;
-	FilenameFilter& operator=(const FilenameFilter &rhs) = default;
+	FilenameMetaFilter(const FilenameMetaFilter &rhs) = default;
+	FilenameMetaFilter& operator=(const FilenameMetaFilter &rhs) = default;
 
 public:
     //!================================================
