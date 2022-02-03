@@ -23,7 +23,6 @@ public:
 
 public:
 	static std::vector<IPathFilterPtr> createFirstLevelFilter(const Options *options);
-	static std::unique_ptr<IPathFilter> createSecondLevelFilter(const std::regex &contentRegex, bool skipBinaries);
 };
 
 

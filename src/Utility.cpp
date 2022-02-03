@@ -35,4 +35,18 @@ bool pathContainsFile(const path &rootPath, const path &file) {
 }
 
 
+bool isBinaryFile(const char* pBuffer, int size) {
+	if(size > 1024)
+		size = 1024;
+
+	unsigned char numberOfUnprintableCharacters = 0;
+	for(int i=0; i < size; ++i) {
+		if(!isprint(pBuffer[i]) && !iscntrl(pBuffer[i]))
+			++numberOfUnprintableCharacters;
+	}
+
+	return (numberOfUnprintableCharacters > 5);
+}
+
+
 } // namespace lg

@@ -46,7 +46,19 @@ void Lightgrep::processDirectory(const path &p) {
 
 void Lightgrep::processRegular(const path &p) {
 	if(passedFirstLvlFilter(p)) {
-		mCheckAndOutput->process(p);
+
+        std::shared_ptr<File> pFile;
+        try
+        {
+            pFile = std::make_shared<File>(p);
+        }
+        catch(...)
+        {
+            // TODO: Some error or warning, file could not be opened
+            return;
+        }
+
+		mCheckAndOutput->process(pFile);
 	}
 }
 

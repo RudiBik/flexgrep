@@ -2,7 +2,9 @@
 
 #include <PathFilter/FilenameFilter.hpp>
 #include <PathFilter/AlwaysMatchingFilter.hpp>
-#include <PathFilter/SecondLvlRegexFilter.hpp>
+
+#include <PathFilter/ContentRegexFilter.hpp>
+
 
 namespace lg {
 
@@ -20,9 +22,10 @@ std::vector<IPathFilter::IPathFilterPtr> IPathFilter::createFirstLevelFilter(con
 }
 
 
-std::unique_ptr<IPathFilter> IPathFilter::createSecondLevelFilter(const std::regex &contentRegex, bool skipBinaries) {
-	return std::make_unique<SecondLvlRegexFilter>(contentRegex, skipBinaries);
+std::unique_ptr<IContentFilter> IContentFilter::createContentFilter(const std::regex &contentRegex, bool skipBinaries) {
+	return std::make_unique<ContentRegexFilter>(contentRegex, skipBinaries);
 }
+
 
 
 } // namespace lg

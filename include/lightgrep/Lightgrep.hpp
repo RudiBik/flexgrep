@@ -1,6 +1,7 @@
 #pragma once
 
 #include <PathFilter/IPathFilter.hpp>
+#include <PathFilter/IContentFilter.hpp>
 #include <ICheckAndOutput.hpp>
 #include <Options.hpp>
 
@@ -46,7 +47,7 @@ Lightgrep::Lightgrep(std::shared_ptr<const Options> options, OutputIterator oite
 
 	// given to ICheckAndOutput::create after successful creation -> don't use it here
 	// TODO: instead of passing true, extract skipBinaries from Options
-	auto secondLvlFilter = IPathFilter::createSecondLevelFilter(options->mRegexContent, true);
+	auto secondLvlFilter = IContentFilter::createContentFilter(options->mRegexContent, true);
 	if(!secondLvlFilter) {
 		// TODO: Throw exception
 	}

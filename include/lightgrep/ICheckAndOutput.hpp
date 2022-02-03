@@ -1,9 +1,9 @@
 #pragma once
 
-#include <PathFilter/IPathFilter.hpp>
+#include <PathFilter/IContentFilter.hpp>
 
-#include <filesystem>
 #include <memory>
+#include <iostream>
 
 
 namespace lg {
@@ -17,12 +17,12 @@ public:
 	virtual ~ICheckAndOutput() {}
 
 public:
-	virtual void process(const std::filesystem::path &path)=0;
+	virtual void process(const std::shared_ptr<File> filePtr)=0;
 	virtual void join()=0;
 
 public:
 	template <typename OutputIterator>
-	static std::unique_ptr<ICheckAndOutput> create(OutputIterator oiter, std::unique_ptr<IPathFilter> secondLvlFilter, bool bParallel);
+	static std::unique_ptr<ICheckAndOutput> create(OutputIterator oiter, std::unique_ptr<IContentFilter> contentFilter, bool bParallel);
 };
 
 
