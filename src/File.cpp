@@ -15,14 +15,14 @@ File::File(const std::filesystem::path& p)
         return;
     }
 
-
     filestream.seekg(0, std::ios::end);
     std::streampos fileSize = filestream.tellg();
     filestream.seekg(0, std::ios::beg);
 
-    char buffer[1024];
-    filestream.read(buffer, 1024);
-    mMetaData.binary = isBinaryFile(buffer, 1024);
+    const int bufferSize = std::min(static_cast<int>(fileSize), 1024);
+    char buffer[bufferSize];
+    filestream.read(buffer, bufferSize);
+    mMetaData.binary = isBinaryFile(buffer, bufferSize);
     mMetaData.filePath = p;
     mMetaData.fileSize = fileSize;
 }
@@ -40,6 +40,11 @@ bool File::loadContent()
     filestream.read(&mData[0], mMetaData.fileSize);
 
     return true;
+}
+
+void File::unloadContent()
+{
+    mData.clear();
 }
 
 

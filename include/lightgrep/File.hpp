@@ -25,6 +25,7 @@ public:
     File(const std::filesystem::path& p);
 
     bool loadContent();
+    void unloadContent();
 
 	File(const File &rhs) = delete;
 	File& operator=(const File &rhs) = delete;

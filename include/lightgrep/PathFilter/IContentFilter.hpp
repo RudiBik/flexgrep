@@ -12,9 +12,6 @@ class File;
 
 class IContentFilter {
 public:
-	typedef std::unique_ptr<IContentFilter> IContentFilterPtr;
-
-public:
 	virtual ~IContentFilter() {}
 
 public:

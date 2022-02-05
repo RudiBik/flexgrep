@@ -11,7 +11,7 @@ namespace lg {
 template <typename OutputIterator>
 class SequentialCheckAndOutput : public ICheckAndOutput {
 public:
-	SequentialCheckAndOutput(OutputIterator oiter, std::unique_ptr<IContentFilter> contentFilter); 
+	SequentialCheckAndOutput(OutputIterator oiter, std::shared_ptr<IContentFilter> contentFilter); 
 	virtual ~SequentialCheckAndOutput();
 
 public:
@@ -20,14 +20,14 @@ public:
 
 private:
 	OutputIterator mOutputIter;
-	std::unique_ptr<IContentFilter> mContentFilter;
+	std::shared_ptr<IContentFilter> mContentFilter;
 };
 
 
 
 template <typename OutputIterator>
-SequentialCheckAndOutput<OutputIterator>::SequentialCheckAndOutput(OutputIterator oiter, std::unique_ptr<IContentFilter> contentFilter)
-    : mOutputIter{oiter}, mContentFilter{std::move(contentFilter)} {
+SequentialCheckAndOutput<OutputIterator>::SequentialCheckAndOutput(OutputIterator oiter, std::shared_ptr<IContentFilter> contentFilter)
+    : mOutputIter{oiter}, mContentFilter{contentFilter} {
 
 	// TODO: Check for validity of arguments
 }
