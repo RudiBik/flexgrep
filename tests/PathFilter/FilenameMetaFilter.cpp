@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <PathFilter/FilenameMetaFilter.hpp>
-#include <Wildcard.hpp>
-#include <Options.hpp>
+#include <Utilities/Wildcard.hpp>
+#include <Utilities/Options.hpp>
 
 #include <regex>
 

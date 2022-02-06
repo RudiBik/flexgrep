@@ -1,5 +1,5 @@
 #include <Lightgrep.hpp>
-#include <Utilities.hpp>
+#include <Utilities/Utilities.hpp>
 
 #include <filesystem>
 #include <iostream>

@@ -1,9 +1,9 @@
-﻿#include <Options.hpp>
+﻿#include <Utilities/Options.hpp>
 #include <Lightgrep.hpp>
 #include <PathFilter/AlwaysMatchingFilter.hpp>
 
-// This include makes sure that the ICheckAndOutput::create function is defined for all templates
-#include "ICheckAndOutput.cpp"
+// This include makes sure that the IContentProcessor::create function is defined for all templates
+#include "IContentProcessor.cpp"
 
 #include "thirdparty/argparse.hpp"
 

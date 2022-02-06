@@ -1,7 +1,7 @@
 #include "PathFilter/ContentRegexFilter.hpp"
 
-#include <ICheckAndOutput.hpp>
-#include <Utilities.hpp>
+#include <ContentProcessors/IContentProcessor.hpp>
+#include <Utilities/Utilities.hpp>
 
 #include <fstream>
 #include <strstream>

@@ -2,8 +2,8 @@
 
 #include <PathFilter/IMetaFilter.hpp>
 #include <PathFilter/IContentFilter.hpp>
-#include <ICheckAndOutput.hpp>
-#include <Options.hpp>
+#include <ContentProcessors/IContentProcessor.hpp>
+#include <Utilities/Options.hpp>
 
 #include <memory>
 #include <optional>
@@ -33,7 +33,7 @@ private:
 	std::shared_ptr<const Options> mOptions;
 
 	std::vector<IMetaFilterPtr> mMetaFilters;
-	std::unique_ptr<ICheckAndOutput> mCheckAndOutput;
+	std::unique_ptr<IContentProcessor> mCheckAndOutput;
 
 	// used to prevent recursive symlinks
 	std::optional<std::filesystem::path> mCurrentSymlink;
@@ -45,7 +45,7 @@ template <typename OutputIterator>
 Lightgrep::Lightgrep(std::shared_ptr<const Options> options, OutputIterator oiter) : mOptions{options}, mCurrentSymlink{} {
 	mMetaFilters = IMetaFilter::createMetaFilters(options.get());
 
-	mCheckAndOutput = ICheckAndOutput::create(oiter, mOptions);
+	mCheckAndOutput = IContentProcessor::create(oiter, mOptions);
 	if(!mCheckAndOutput) {
 		// TODO: Throw exception
 	}
