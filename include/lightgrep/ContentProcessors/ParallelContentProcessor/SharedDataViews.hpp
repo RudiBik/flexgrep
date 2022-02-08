@@ -45,7 +45,8 @@ private:
 class BinaryReaderView
 {
 public:
-    BinaryReaderView(SharedDataSPtr dataPtr, const int startPos) : mSharedData{dataPtr}, mNumAvailableFiles{0}, mProcessingIndex{startPos} {}
+    BinaryReaderView(SharedDataSPtr dataPtr, const int numThreads, const int startPos)
+        : mSharedData{dataPtr}, mNumAvailableFiles{0}, mProcessingIndex{startPos}, mNumOverallThreads{numThreads} {}
 
     bool isWorkAvailable()
     {
@@ -61,7 +62,7 @@ public:
         if(mProcessingIndex < mNumAvailableFiles)
         {
             FileSPtr nextFile = mSharedData->fileData[mProcessingIndex];
-            mProcessingIndex += 2;
+            mProcessingIndex += mNumOverallThreads;
 
             return nextFile;
         }
@@ -81,6 +82,8 @@ private:
 
     int mNumAvailableFiles;
     int mProcessingIndex;
+
+    const int mNumOverallThreads;
 };
 
 

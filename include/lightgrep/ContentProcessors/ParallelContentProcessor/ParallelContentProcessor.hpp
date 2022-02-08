@@ -28,11 +28,7 @@ void threadWorker(OutputIterator oiter, std::shared_ptr<IContentFilter> contentF
 
             pFile->unloadContent();
         }
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-
-    readerView->print();
 }
 
 
@@ -50,8 +46,7 @@ public:
 private:
     std::unique_ptr<WriterView> mSharedDataWriter;
 
-    std::unique_ptr<std::thread> mThread;
-    std::unique_ptr<std::thread> mThread2;
+    std::vector<std::unique_ptr<std::thread>> mThreads;
 };
 
 
@@ -61,8 +56,11 @@ ParallelContentProcessor<OutputIterator>::ParallelContentProcessor(OutputIterato
     SharedDataSPtr sharedDataPtr = std::make_shared<SharedData>();
     mSharedDataWriter = std::make_unique<WriterView>(sharedDataPtr);
 
-    mThread = std::make_unique<std::thread>(&threadWorker<OutputIterator>, oiter, contentFilter, std::make_unique<BinaryReaderView>(sharedDataPtr, 0));
-    mThread2 = std::make_unique<std::thread>(&threadWorker<OutputIterator>, oiter, contentFilter, std::make_unique<BinaryReaderView>(sharedDataPtr, 1));
+    const int numThreads = std::max(1U, std::thread::hardware_concurrency() - 1);
+    for(int i = 0; i < numThreads; ++i)
+    {
+        mThreads.push_back(std::make_unique<std::thread>(&threadWorker<OutputIterator>, oiter, contentFilter, std::make_unique<BinaryReaderView>(sharedDataPtr, numThreads, i)));
+    }
 }
 
 
@@ -80,8 +78,10 @@ void ParallelContentProcessor<OutputIterator>::process(const FileSPtr filePtr) {
 template <typename OutputIterator>
 void ParallelContentProcessor<OutputIterator>::join() {
     mSharedDataWriter->setFinished();
-    mThread->join();
-    mThread2->join();
+    for(const auto& t : mThreads)
+    {
+        t->join();
+    }
 }
 
 
