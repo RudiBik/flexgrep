@@ -27,6 +27,10 @@ int main(int argc, char** argv)
             .default_value(false)
             .implicit_value(true)
             .help("Binaries are not skipped during search if specified");
+        program.add_argument("--singleThreaded")
+            .default_value(false)
+            .implicit_value(true)
+            .help("When set the content filtering is done on one only one thread");
 
         try
         {
@@ -42,7 +46,8 @@ int main(int argc, char** argv)
 	std::ostream_iterator<std::string> oiter{std::cout};
 
 	auto opt = std::make_shared<lg::Options>(program.get<std::string>("root"), 
-            program.get<std::string>("--wildcard"), program.get<std::string>("regex"), !program.get<bool>("--dontSkipBinaries"));
+            program.get<std::string>("--wildcard"), program.get<std::string>("regex"), !program.get<bool>("--dontSkipBinaries"),
+            !program.get<bool>("--singleThreaded"));
 	lg::Lightgrep lightgrep(opt, oiter);
 
 	lightgrep.searchAndOutput();

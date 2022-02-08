@@ -16,7 +16,7 @@ const string filenameWildcard = "*test1?3";
 
 TEST(FilenameMetaFilterTests, equalityTestTrue) {
 	Wildcard wc(filenameWildcard);
-	auto opt = make_shared<Options>("", filenameWildcard, "", true);
+	auto opt = make_shared<Options>("", filenameWildcard, "", true, true);
 	FilenameMetaFilter filter(*(opt->mFilenameWildcard));
 
 	EXPECT_EQ(filter.check(File::Meta{"test123", 0}), wc.match("test123"));
@@ -26,7 +26,7 @@ TEST(FilenameMetaFilterTests, equalityTestTrue) {
 
 TEST(FilenameMetaFilterTests, inequalityTestFalse) {
 	Wildcard wc(filenameWildcard);
-	auto opt = make_shared<Options>("", filenameWildcard, "", true);
+	auto opt = make_shared<Options>("", filenameWildcard, "", true, true);
 	FilenameMetaFilter filter(*(opt->mFilenameWildcard));
 
 	EXPECT_EQ(filter.check(File::Meta{"test12", 0}), wc.match("test12"));

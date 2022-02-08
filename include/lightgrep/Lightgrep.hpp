@@ -33,9 +33,9 @@ private:
 	std::shared_ptr<const Options> mOptions;
 
 	std::vector<IMetaFilterPtr> mMetaFilters;
-	std::unique_ptr<IContentProcessor> mCheckAndOutput;
+	std::unique_ptr<IContentProcessor> mContentFilter;
 
-	// used to prevent recursive symlinks
+	// used to prevent following recursive symlinks
 	std::optional<std::filesystem::path> mCurrentSymlink;
 };
 
@@ -45,8 +45,8 @@ template <typename OutputIterator>
 Lightgrep::Lightgrep(std::shared_ptr<const Options> options, OutputIterator oiter) : mOptions{options}, mCurrentSymlink{} {
 	mMetaFilters = IMetaFilter::createMetaFilters(options.get());
 
-	mCheckAndOutput = IContentProcessor::create(oiter, mOptions);
-	if(!mCheckAndOutput) {
+	mContentFilter = IContentProcessor::create(oiter, mOptions);
+	if(!mContentFilter) {
 		// TODO: Throw exception
 	}
 }

@@ -23,8 +23,14 @@ std::unique_ptr<IContentProcessor> IContentProcessor::create(OutputIterator oite
 	}
 
     // Create the processor (single- or multi-threaded)
-
-	return std::make_unique<ParallelContentProcessor<OutputIterator>>(oiter, contentFilter);
+    if(opt->mParallelContentFiltering)
+    {
+        return std::make_unique<ParallelContentProcessor<OutputIterator>>(oiter, contentFilter);
+    }
+    else
+    {
+        return std::make_unique<SequentialContentProcessor<OutputIterator>>(oiter, contentFilter);
+    }
 }
 
 

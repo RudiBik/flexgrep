@@ -13,7 +13,7 @@ using namespace std::filesystem;
 void Lightgrep::searchAndOutput() {
 	processDirectory(mOptions->mRootPath);
 
-	mCheckAndOutput->join();
+	mContentFilter->join();
 }
 
 
@@ -64,7 +64,7 @@ void Lightgrep::processRegular(const path &p) {
             return;
         }
 
-		mCheckAndOutput->process(pFile);
+		mContentFilter->process(pFile);
 	}
 }
 

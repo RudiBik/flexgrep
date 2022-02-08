@@ -15,7 +15,7 @@ namespace lg {
 //!----------------------------------------------- 
 class Options {
 public:
-	Options(const std::string &rootPath, const std::string &filenameWildcard, const std::string &regexContent, bool skipBinaries);
+	Options(const std::string &rootPath, const std::string &filenameWildcard, const std::string &regexContent, bool bskipBinaries, bool bParallelFiltering);
 
 
 	// Enabling / Disabling optional features
@@ -28,9 +28,6 @@ public:
 	std::regex mRegexContent;
 
     bool mSkipBinaries;
-
-
-    // TODO make configurable
     bool mParallelContentFiltering{false};
 };
 

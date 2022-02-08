@@ -6,7 +6,7 @@ using namespace std::filesystem;
 
 
 
-Options::Options(const std::string &rootPath, const std::string &filenameWildcard, const std::string &regexContent, bool skipBinaries) {
+Options::Options(const std::string &rootPath, const std::string &filenameWildcard, const std::string &regexContent, bool bskipBinaries, bool bParallelContentFiltering) {
 	if(!exists(rootPath) || !is_directory(rootPath)) {
 		// TOTO Output error message and quit
 	}
@@ -22,7 +22,8 @@ Options::Options(const std::string &rootPath, const std::string &filenameWildcar
 	// TODO: check if regexContent is valid
 	mRegexContent = std::regex(regexContent);
 
-    mSkipBinaries = skipBinaries;
+    mSkipBinaries = bskipBinaries;
+    mParallelContentFiltering = bParallelContentFiltering;
 }
 
 

@@ -32,7 +32,6 @@ bool File::loadContent()
 {
     std::ifstream filestream(mMetaData.filePath, std::ios::in | std::ios::binary);
     if(!filestream.is_open()) {
-        // TODO: Throw an exception
         return false;
     }
 
