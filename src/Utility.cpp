@@ -41,11 +41,11 @@ bool isBinaryFile(const char* pBuffer, int size) {
 
 	unsigned char numberOfUnprintableCharacters = 0;
 	for(int i=0; i < size; ++i) {
-		if(!isprint(pBuffer[i]) && !iscntrl(pBuffer[i]))
+		if((!isprint(pBuffer[i]) && !iscntrl(pBuffer[i])) || (pBuffer[i] == '\0'))
 			++numberOfUnprintableCharacters;
 	}
 
-	return (numberOfUnprintableCharacters > 5);
+	return (numberOfUnprintableCharacters > 1);
 }
 
 
