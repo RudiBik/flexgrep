@@ -12,7 +12,7 @@ namespace lg {
 template<typename OutputIterator>
 std::unique_ptr<IContentProcessor>
 IContentProcessor::create(OutputIterator oiter,
-                          std::shared_ptr<const Options> opt)
+                          std::shared_ptr<const Configuration> opt)
 {
     // Create the content filter
     // if regex filter

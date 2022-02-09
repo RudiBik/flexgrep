@@ -1,7 +1,7 @@
 #pragma once
 
 #include <File.hpp>
-#include <Utilities/Options.hpp>
+#include <Utilities/Configuration.hpp>
 
 #include <filesystem>
 #include <memory>

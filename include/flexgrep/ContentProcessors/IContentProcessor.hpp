@@ -1,7 +1,7 @@
 #pragma once
 
 #include <PathFilter/IContentFilter.hpp>
-#include <Utilities/Options.hpp>
+#include <Utilities/Configuration.hpp>
 
 #include <iostream>
 #include <memory>
@@ -24,7 +24,7 @@ class IContentProcessor
     template<typename OutputIterator>
     static std::unique_ptr<IContentProcessor> create(
       OutputIterator oiter,
-      std::shared_ptr<const Options> opt);
+      std::shared_ptr<const Configuration> opt);
 };
 
 } // namespace lg

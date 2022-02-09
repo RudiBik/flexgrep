@@ -12,10 +12,10 @@ namespace lg {
 //! \brief Responsible for checking the semantics of the input for the Flexgrep
 //! class
 //!-----------------------------------------------
-class Options
+class Configuration
 {
   public:
-    Options(const std::string& rootPath,
+    Configuration(const std::string& rootPath,
             const std::string& filenameWildcard,
             const std::string& regexContent,
             bool bskipBinaries,

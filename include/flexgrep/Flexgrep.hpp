@@ -3,7 +3,7 @@
 #include <ContentProcessors/IContentProcessor.hpp>
 #include <PathFilter/IContentFilter.hpp>
 #include <PathFilter/IMetaFilter.hpp>
-#include <Utilities/Options.hpp>
+#include <Utilities/Configuration.hpp>
 
 #include <memory>
 #include <optional>
@@ -26,7 +26,7 @@ class Flexgrep
     //! output iterator directly to the content filter on construction
     //!------------------------------------------------
     template<typename OutputIterator>
-    Flexgrep(std::shared_ptr<const Options> options, OutputIterator oiter);
+    Flexgrep(std::shared_ptr<const Configuration> config, OutputIterator oiter);
 
     Flexgrep(const Flexgrep& rhs) = delete;
     Flexgrep& operator=(const Flexgrep& rhs) = delete;
@@ -41,10 +41,10 @@ class Flexgrep
     void processRegular(const std::filesystem::path& p);
 
     static std::vector<IMetaFilterUPtr> createMetaFilters(
-      const Options* options);
+      const Configuration* config);
 
   private:
-    std::shared_ptr<const Options> mOptions;
+    std::shared_ptr<const Configuration> mConfiguration;
 
     std::vector<IMetaFilterUPtr> mMetaFilters;
     std::unique_ptr<IContentProcessor> mContentFilter;
@@ -54,13 +54,14 @@ class Flexgrep
 };
 
 template<typename OutputIterator>
-Flexgrep::Flexgrep(std::shared_ptr<const Options> options, OutputIterator oiter)
-  : mOptions{ options }
+Flexgrep::Flexgrep(std::shared_ptr<const Configuration> config,
+                   OutputIterator oiter)
+  : mConfiguration{ config }
   , mCurrentSymlink{}
 {
-    mMetaFilters = Flexgrep::createMetaFilters(options.get());
+    mMetaFilters = Flexgrep::createMetaFilters(config.get());
 
-    mContentFilter = IContentProcessor::create(oiter, mOptions);
+    mContentFilter = IContentProcessor::create(oiter, mConfiguration);
     if (!mContentFilter) {
         // TODO: Throw exception
     }

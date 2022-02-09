@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <Utilities/Options.hpp>
+#include <Utilities/Configuration.hpp>
 
 #include "PathFilter/FilenameMetaFilter.cpp"
 #include "Wildcard.cpp"

@@ -16,7 +16,7 @@ using namespace std::filesystem;
 void
 Flexgrep::searchAndOutput()
 {
-    processDirectory(mOptions->mRootPath);
+    processDirectory(mConfiguration->mRootPath);
 
     mContentFilter->join();
 }
@@ -33,7 +33,7 @@ Flexgrep::processDirectory(const path& p)
         } else if (p.is_directory()) {
             // when following a symlink, don't enter the root directory
             // reccursively
-            if (mCurrentSymlink && equivalent(p, mOptions->mRootPath))
+            if (mCurrentSymlink && equivalent(p, mConfiguration->mRootPath))
                 continue;
 
             processDirectory(p);
@@ -77,7 +77,7 @@ Flexgrep::processSymlink(const path& p)
     if (exists(linkedFile)) {
         // dont't follow symlinks that point to a file under the root search
         // directory
-        if (pathContainsFile(mOptions->mRootPath, linkedFile)) {
+        if (pathContainsFile(mConfiguration->mRootPath, linkedFile)) {
             // TODO: Log that this file is skipped
             return;
         }
@@ -109,18 +109,18 @@ Flexgrep::passesMetaFilters(const File::Meta& metaData) const
 }
 
 std::vector<IMetaFilterUPtr>
-Flexgrep::createMetaFilters(const Options* options)
+Flexgrep::createMetaFilters(const Configuration* config)
 {
     std::vector<IMetaFilterUPtr> result{};
 
-    if (options->mSkipBinaries) {
+    if (config->mSkipBinaries) {
         auto filter = std::make_unique<BinaryMetaFilter>();
         result.push_back(std::move(filter));
     }
 
-    if (options->mFilenameWildcard) {
+    if (config->mFilenameWildcard) {
         auto filter =
-          std::make_unique<FilenameMetaFilter>(*(options->mFilenameWildcard));
+          std::make_unique<FilenameMetaFilter>(*(config->mFilenameWildcard));
         result.push_back(std::move(filter));
     }
 

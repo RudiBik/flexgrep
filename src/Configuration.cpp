@@ -1,10 +1,10 @@
-#include "Utilities/Options.hpp"
+#include "Utilities/Configuration.hpp"
 
 namespace lg {
 
 using namespace std::filesystem;
 
-Options::Options(const std::string& rootPath,
+Configuration::Configuration(const std::string& rootPath,
                  const std::string& filenameWildcard,
                  const std::string& regexContent,
                  bool bskipBinaries,

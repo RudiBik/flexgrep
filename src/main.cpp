@@ -1,6 +1,6 @@
 ﻿#include <Flexgrep.hpp>
 #include <PathFilter/AlwaysMatchingFilter.hpp>
-#include <Utilities/Options.hpp>
+#include <Utilities/Configuration.hpp>
 
 // This include makes sure that the IContentProcessor::create function is
 // defined for all templates
@@ -46,7 +46,7 @@ main(int argc, char** argv)
     std::ostream_iterator<std::string> oiter{ std::cout };
 
     auto opt =
-      std::make_shared<lg::Options>(program.get<std::string>("root"),
+      std::make_shared<lg::Configuration>(program.get<std::string>("root"),
                                     program.get<std::string>("--wildcard"),
                                     program.get<std::string>("regex"),
                                     !program.get<bool>("--dontSkipBinaries"),
