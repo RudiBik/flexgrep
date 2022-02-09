@@ -11,7 +11,7 @@ namespace lg {
 
 
 //!===============================================
-//! \brief Responsible for checking the semantics of the input for the Lightgrep class
+//! \brief Responsible for checking the semantics of the input for the Flexgrep class
 //!----------------------------------------------- 
 class Options {
 public:

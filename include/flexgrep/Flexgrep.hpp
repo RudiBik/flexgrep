@@ -12,10 +12,10 @@
 namespace lg {
 
 
-class Lightgrep {
+class Flexgrep {
 public:
 	template <typename OutputIterator>
-	Lightgrep(std::shared_ptr<const Options> options, OutputIterator oiter);
+	Flexgrep(std::shared_ptr<const Options> options, OutputIterator oiter);
 
 	void searchAndOutput();
 
@@ -42,7 +42,7 @@ private:
 
 
 template <typename OutputIterator>
-Lightgrep::Lightgrep(std::shared_ptr<const Options> options, OutputIterator oiter) : mOptions{options}, mCurrentSymlink{} {
+Flexgrep::Flexgrep(std::shared_ptr<const Options> options, OutputIterator oiter) : mOptions{options}, mCurrentSymlink{} {
 	mMetaFilters = IMetaFilter::createMetaFilters(options.get());
 
 	mContentFilter = IContentProcessor::create(oiter, mOptions);

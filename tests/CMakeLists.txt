@@ -10,7 +10,7 @@ find_package(GTest REQUIRED)
 add_executable(tests
 	testmain.cpp
 )
-target_link_libraries(tests PRIVATE lightgrep_lib)
+target_link_libraries(tests PRIVATE flexgrep_lib)
 
 target_include_directories(tests PRIVATE ${GTEST_INCLUDE_DIRS})
 target_link_libraries(tests PRIVATE GTest::GTest)

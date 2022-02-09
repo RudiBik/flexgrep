@@ -1,4 +1,4 @@
-#include <Lightgrep.hpp>
+#include <Flexgrep.hpp>
 #include <Utilities/Utilities.hpp>
 
 #include <filesystem>
@@ -10,14 +10,14 @@ using namespace std;
 using namespace std::filesystem;
 
 
-void Lightgrep::searchAndOutput() {
+void Flexgrep::searchAndOutput() {
 	processDirectory(mOptions->mRootPath);
 
 	mContentFilter->join();
 }
 
 
-void Lightgrep::processDirectory(const path &p) {
+void Flexgrep::processDirectory(const path &p) {
 	// TODO: check if it is excluded
 	
 
@@ -44,7 +44,7 @@ void Lightgrep::processDirectory(const path &p) {
 }
 
 
-void Lightgrep::processRegular(const path &p) {
+void Flexgrep::processRegular(const path &p) {
     FileSPtr pFile;
     try
     {
@@ -69,7 +69,7 @@ void Lightgrep::processRegular(const path &p) {
 }
 
 
-void Lightgrep::processSymlink(const path &p) {
+void Flexgrep::processSymlink(const path &p) {
 	path linkedFile = read_symlink(p);
 	
 	if(exists(linkedFile)) {
@@ -98,7 +98,7 @@ void Lightgrep::processSymlink(const path &p) {
 }
 
 
-bool Lightgrep::passesMetaFilters(const File::Meta& metaData) const {
+bool Flexgrep::passesMetaFilters(const File::Meta& metaData) const {
 	for(const auto &filter : mMetaFilters) {
 		if(!filter->check(metaData))
 			return false;

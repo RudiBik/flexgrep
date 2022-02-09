@@ -1,5 +1,5 @@
 ﻿#include <Utilities/Options.hpp>
-#include <Lightgrep.hpp>
+#include <Flexgrep.hpp>
 #include <PathFilter/AlwaysMatchingFilter.hpp>
 
 // This include makes sure that the IContentProcessor::create function is defined for all templates
@@ -14,7 +14,7 @@ std::string getValidRegexCommandFromUser(const std::string &whatToInputMsg);
 
 int main(int argc, char** argv)
 {
-    argparse::ArgumentParser program("lightgrep");
+    argparse::ArgumentParser program("flexgrep");
     {
         program.add_argument("root")
             .help("Root directory starting the search");
@@ -48,9 +48,9 @@ int main(int argc, char** argv)
 	auto opt = std::make_shared<lg::Options>(program.get<std::string>("root"), 
             program.get<std::string>("--wildcard"), program.get<std::string>("regex"), !program.get<bool>("--dontSkipBinaries"),
             !program.get<bool>("--singleThreaded"));
-	lg::Lightgrep lightgrep(opt, oiter);
+	lg::Flexgrep flexgrep(opt, oiter);
 
-	lightgrep.searchAndOutput();
+	flexgrep.searchAndOutput();
 
    	
 	return 0;

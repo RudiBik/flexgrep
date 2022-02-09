@@ -5,7 +5,7 @@ if(CCACHE_PROGRAM)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
 endif()
 
-project(lightgrep)
+project(flexgrep)
 
 
 include(GNUInstallDirs)
@@ -16,7 +16,7 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(INCLUDE_DIRECTORY "${CMAKE_SOURCE_DIR}/include/lightgrep")
+set(INCLUDE_DIRECTORY "${CMAKE_SOURCE_DIR}/include/flexgrep")
 
 
 add_subdirectory(src)
