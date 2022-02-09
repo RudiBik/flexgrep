@@ -1,0 +1,21 @@
+{
+  "configurations": {
+    "lightgrep": {
+      "adapter": "vscode-cpptools",
+      "configuration": {
+        "type":    "cppdbg",
+        "request": "launch",
+        "program": "${workspaceRoot}/build/src/lightgrep",
+        "args": [],
+        "cwd": "${workspaceRoot}/build/src",
+        "environment": [],
+        "externalConsole": true,
+        "stopAtEntry": true,
+        "MIMode": "gdb",
+        "logging": {
+          "engineLogging": false
+        }
+      }
+    }
+  }
+}
