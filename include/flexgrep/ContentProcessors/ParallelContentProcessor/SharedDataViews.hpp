@@ -1,83 +1,57 @@
 #pragma once
 
 #include <File.hpp>
-
+#include <iostream>
 #include <memory>
 #include <mutex>
-
-#include <iostream>
 
 namespace lg {
 
 struct SharedData
 {
-    bool bFinished{false};
+    bool bFinished{ false };
     std::vector<FileSPtr> fileData;
 
     std::mutex structMutex;
 };
 using SharedDataSPtr = std::shared_ptr<SharedData>;
 
-
+//!===============================================
+//! \brief A view on the SharedData structure only permitting pushing new
+//!        elements to the container while locking the mutex
+//!-----------------------------------------------
 class WriterView
 {
-public:
-    WriterView(SharedDataSPtr dataPtr) : mSharedData{dataPtr} {}
+  public:
+    WriterView(SharedDataSPtr dataPtr);
 
-    void push_back(FileSPtr filePtr)
-    {
-        std::lock_guard<std::mutex> l{mSharedData->structMutex};
-        mSharedData->fileData.push_back(filePtr);
-    }
+    void push_back(FileSPtr filePtr);
+    void setFinished();
 
-    void setFinished()
-    {
-        std::lock_guard<std::mutex> l{mSharedData->structMutex};
-        mSharedData->bFinished = true;
-    }
-
-private:
+  private:
     SharedDataSPtr mSharedData;
 };
 
-
-
+//!===============================================
+//! \brief A view on the SharedData structure only reading already pushed data
+//!        from the container. It will query the number of available unprocessed
+//!        data blocks locking the mutex and then start processing them without
+//!        blocking
+//!
+//! If will only process every X'th element where X is the number of threads
+//! started. Each thread doing the same and starting at different positions
+//!-----------------------------------------------
 class BinaryReaderView
 {
-public:
-    BinaryReaderView(SharedDataSPtr dataPtr, const int numThreads, const int startPos)
-        : mSharedData{dataPtr}, mNumAvailableFiles{0}, mProcessingIndex{startPos}, mNumOverallThreads{numThreads} {}
+  public:
+    BinaryReaderView(SharedDataSPtr dataPtr,
+                     const int numThreads,
+                     const int startPos);
 
-    bool isWorkAvailable()
-    {
-        std::lock_guard<std::mutex> l{mSharedData->structMutex};
+    bool isWorkAvailable();
+    FileSPtr getNext();
 
-        mNumAvailableFiles = mSharedData->fileData.size();
-
-        return !mSharedData->bFinished || (mProcessingIndex < mNumAvailableFiles);
-    }
-
-    FileSPtr getNext()
-    {
-        if(mProcessingIndex < mNumAvailableFiles)
-        {
-            FileSPtr nextFile = mSharedData->fileData[mProcessingIndex];
-            mProcessingIndex += mNumOverallThreads;
-
-            return nextFile;
-        }
-        else
-        {
-            return {};
-        }
-    }
-
-    void print()
-    {
-        std::cout << mProcessingIndex << ", " << mNumAvailableFiles << std::endl;
-    }
-
-private:
+  private:
     SharedDataSPtr mSharedData;
 
     int mNumAvailableFiles;
@@ -85,6 +59,5 @@ private:
 
     const int mNumOverallThreads;
 };
-
 
 } // namespace lg

@@ -8,7 +8,7 @@ namespace lg {
 
 class File
 {
-public:
+  public:
     struct Meta
     {
         std::filesystem::path filePath;
@@ -16,21 +16,22 @@ public:
         bool binary;
         // Other metadata like permissions, ...
     };
-public:
-	//!===============================================
-	//! \brief ...
-    //! 
+
+  public:
+    //!===============================================
+    //! \brief ...
+    //!
     //! \throws ...
-	//!----------------------------------------------- 
+    //!-----------------------------------------------
     File(const std::filesystem::path& p);
 
     bool loadContent();
     void unloadContent();
 
-	File(const File &rhs) = delete;
-	File& operator=(const File &rhs) = delete;
+    File(const File& rhs) = delete;
+    File& operator=(const File& rhs) = delete;
 
-public:
+  public:
     Meta mMetaData;
     std::vector<char> mData;
 };

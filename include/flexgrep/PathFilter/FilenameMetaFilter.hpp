@@ -1,36 +1,35 @@
 #pragma once
 
-#include <Utilities/Wildcard.hpp>
 #include <PathFilter/IMetaFilter.hpp>
+#include <Utilities/Wildcard.hpp>
 
 #include <filesystem>
 
-
 namespace lg {
-
 
 //!================================================
 //! \brief Very basic Filter that checks only the following parameter:
-//! Filename: The filenames of all incoming paths have to match the filename wildcard from the given Options.
+//!        Filename: The filenames of all incoming paths have to match the
+//!        provided filename wildcard
 //!------------------------------------------------
-class FilenameMetaFilter : public IMetaFilter {
-public:
-	FilenameMetaFilter(const Wildcard &wildcard);
+class FilenameMetaFilter : public IMetaFilter
+{
+  public:
+    FilenameMetaFilter(const Wildcard& wildcard);
 
-	virtual ~FilenameMetaFilter() {}
+    virtual ~FilenameMetaFilter() {}
 
-	FilenameMetaFilter(const FilenameMetaFilter &rhs) = default;
-	FilenameMetaFilter& operator=(const FilenameMetaFilter &rhs) = default;
+    FilenameMetaFilter(const FilenameMetaFilter& rhs) = default;
+    FilenameMetaFilter& operator=(const FilenameMetaFilter& rhs) = default;
 
-public:
+  public:
     //!================================================
-	//! Returns true if the filename of the path matches the wildcard
+    //! Returns true if the filename of the path matches the wildcard
     //!------------------------------------------------
-	bool check(const File::Meta& metaData) const override;
+    bool check(const File::Meta& metaData) const override;
 
-private:
-	Wildcard wc;
+  private:
+    Wildcard wc;
 };
-
 
 } // namespace lg

@@ -5,18 +5,17 @@
 #include <memory>
 #include <regex>
 
-
 namespace lg {
 
 class File;
 
-class IContentFilter {
-public:
-	virtual ~IContentFilter() {}
+class IContentFilter
+{
+  public:
+    virtual ~IContentFilter() {}
 
-public:
-	virtual bool check(const FileSPtr pFile) const=0;
+  public:
+    virtual bool check(const FileSPtr pFile) const = 0;
 };
-
 
 } // namespace lg

@@ -3,28 +3,26 @@
 #include <PathFilter/IMetaFilter.hpp>
 #include <iostream>
 
-
 namespace lg {
 
+class BinaryMetaFilter : public IMetaFilter
+{
+  public:
+    BinaryMetaFilter() {}
 
-class BinaryMetaFilter : public IMetaFilter {
-public:
-	BinaryMetaFilter() {}
+    virtual ~BinaryMetaFilter() {}
 
-	virtual ~BinaryMetaFilter() {}
+    BinaryMetaFilter(const BinaryMetaFilter& rhs) = default;
+    BinaryMetaFilter& operator=(const BinaryMetaFilter& rhs) = default;
 
-	BinaryMetaFilter(const BinaryMetaFilter &rhs) = default;
-	BinaryMetaFilter& operator=(const BinaryMetaFilter &rhs) = default;
-
-public:
+  public:
     //!================================================
-	//! Returns true if the file is not a binary file
+    //! Returns true if the file is not a binary file
     //!------------------------------------------------
-	bool check(const File::Meta& metaData) const override
+    bool check(const File::Meta& metaData) const override
     {
         return (metaData.binary == false);
     }
 };
-
 
 } // namespace lg

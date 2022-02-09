@@ -1,16 +1,12 @@
 #include <File.hpp>
-
 #include <Utilities/Utilities.hpp>
 
-
 namespace lg {
-
-
 
 File::File(const std::filesystem::path& p)
 {
     std::ifstream filestream(p, std::ios::in | std::ios::binary);
-    if(!filestream.is_open()) {
+    if (!filestream.is_open()) {
         // TODO: Throw an exception
         return;
     }
@@ -27,11 +23,12 @@ File::File(const std::filesystem::path& p)
     mMetaData.fileSize = fileSize;
 }
 
-
-bool File::loadContent()
+bool
+File::loadContent()
 {
-    std::ifstream filestream(mMetaData.filePath, std::ios::in | std::ios::binary);
-    if(!filestream.is_open()) {
+    std::ifstream filestream(mMetaData.filePath,
+                             std::ios::in | std::ios::binary);
+    if (!filestream.is_open()) {
         return false;
     }
 
@@ -41,10 +38,10 @@ bool File::loadContent()
     return true;
 }
 
-void File::unloadContent()
+void
+File::unloadContent()
 {
     mData.clear();
 }
-
 
 } // namespace lg
