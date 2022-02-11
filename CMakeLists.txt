@@ -19,5 +19,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(INCLUDE_DIRECTORY "${CMAKE_SOURCE_DIR}/include/flexgrep")
 
 
+IF (WIN32)
+    # Generate symbold pdb files if in debug mode
+    add_compile_options("$<$<CONFIG:DEBUG>:/Zi>")
+    add_link_options("$<$<CONFIG:DEBUG>:/DEBUG>")
+    add_link_options("$<$<CONFIG:DEBUG>:/OPT:REF>")
+    add_link_options("$<$<CONFIG:DEBUG>:/OPT:ICF>")
+ENDIF ()
+
+
 add_subdirectory(src)
 add_subdirectory(tests)

@@ -24,13 +24,15 @@ Flexgrep::searchAndOutput()
 void
 Flexgrep::processDirectory(const path& p)
 {
-    // TODO: check if it is excluded
+    std::error_code ec;
 
-    for (const auto& p : directory_iterator(p)) {
-        if (p.is_symlink()) {
+    // TODO: check if it is excluded
+    for (const auto& p : directory_iterator(p, std::filesystem::directory_options::skip_permission_denied)) {
+
+        if (p.is_symlink(ec)) {
             processSymlink(p);
 
-        } else if (p.is_directory()) {
+        } else if (p.is_directory(ec)) {
             // when following a symlink, don't enter the root directory
             // reccursively
             if (mCurrentSymlink && equivalent(p, mConfiguration->mRootPath))
@@ -38,7 +40,7 @@ Flexgrep::processDirectory(const path& p)
 
             processDirectory(p);
 
-        } else if (p.is_regular_file()) {
+        } else if (p.is_regular_file(ec)) {
             processRegular(p);
 
         } else {

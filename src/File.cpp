@@ -1,6 +1,7 @@
 #include <File.hpp>
 #include <Utilities/Utilities.hpp>
 
+
 namespace lg {
 
 File::File(const std::filesystem::path& p)
@@ -15,12 +16,17 @@ File::File(const std::filesystem::path& p)
     std::streampos fileSize = filestream.tellg();
     filestream.seekg(0, std::ios::beg);
 
-    const int bufferSize = std::min(static_cast<int>(fileSize), 1024);
-    char buffer[bufferSize];
-    filestream.read(buffer, bufferSize);
-    mMetaData.binary = isBinaryFile(buffer, bufferSize);
     mMetaData.filePath = p;
     mMetaData.fileSize = fileSize;
+    mMetaData.binary   = false;
+
+    const size_t bufferSize = std::min(mMetaData.fileSize, static_cast<size_t>(8192));
+    if (bufferSize > 0) {
+        std::vector<char> buffer(bufferSize);
+        filestream.read(&buffer[0], bufferSize);
+        mMetaData.binary =
+          isBinaryFile(&buffer[0], bufferSize, fileSize);
+    }
 }
 
 bool
@@ -33,7 +39,9 @@ File::loadContent()
     }
 
     mData.resize(mMetaData.fileSize);
-    filestream.read(&mData[0], mMetaData.fileSize);
+    if (mMetaData.fileSize > 0) {
+        filestream.read(&mData[0], mMetaData.fileSize);
+    }
 
     return true;
 }

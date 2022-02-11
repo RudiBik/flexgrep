@@ -41,10 +41,10 @@ class WriterView
 //! If will only process every X'th element where X is the number of threads
 //! started. Each thread doing the same and starting at different positions
 //!-----------------------------------------------
-class BinaryReaderView
+class ReaderView
 {
   public:
-    BinaryReaderView(SharedDataSPtr dataPtr,
+    ReaderView(SharedDataSPtr dataPtr,
                      const int numThreads,
                      const int startPos);
 

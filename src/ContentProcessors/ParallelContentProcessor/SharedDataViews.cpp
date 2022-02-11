@@ -22,7 +22,7 @@ WriterView::setFinished()
 
 //!===============================================
 
-BinaryReaderView::BinaryReaderView(SharedDataSPtr dataPtr,
+ReaderView::ReaderView(SharedDataSPtr dataPtr,
                                    const int numThreads,
                                    const int startPos)
   : mSharedData{ dataPtr }
@@ -32,7 +32,7 @@ BinaryReaderView::BinaryReaderView(SharedDataSPtr dataPtr,
 {}
 
 bool
-BinaryReaderView::isWorkAvailable()
+ReaderView::isWorkAvailable()
 {
     std::lock_guard<std::mutex> l{ mSharedData->structMutex };
 
@@ -42,7 +42,7 @@ BinaryReaderView::isWorkAvailable()
 }
 
 FileSPtr
-BinaryReaderView::getNext()
+ReaderView::getNext()
 {
     if (mProcessingIndex < mNumAvailableFiles) {
         FileSPtr nextFile = mSharedData->fileData[mProcessingIndex];

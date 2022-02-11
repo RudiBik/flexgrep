@@ -33,16 +33,29 @@ pathContainsFile(const path& rootPath, const path& file)
 }
 
 bool
-isBinaryFile(const char* pBuffer, int size)
+isBinaryFile(const char* pBuffer, int bufferSize, size_t fileSize)
 {
-    if (size > 1024)
-        size = 1024;
+    static constexpr size_t MAX_SIZE = 100000000; // 1 GB
+    if (fileSize > MAX_SIZE) {
+        return true;
+    }
+
+    if (bufferSize > 8192)
+        bufferSize = 8192;
 
     unsigned char numberOfUnprintableCharacters = 0;
-    for (int i = 0; i < size; ++i) {
-        if ((!isprint(pBuffer[i]) && !iscntrl(pBuffer[i])) ||
-            (pBuffer[i] == '\0'))
+    for (int i = 0; i < bufferSize; ++i) {
+        // On windows iscntrl is throwing an exception on chars < -1
+#ifdef _WIN32
+        if (pBuffer[i] == '\0') {
             ++numberOfUnprintableCharacters;
+        }
+#else
+        if ((!isprint(pBuffer[i]) && !iscntrl(pBuffer[i])) ||
+            (pBuffer[i] == '\0')) {
+            ++numberOfUnprintableCharacters;
+        }
+#endif
     }
 
     return (numberOfUnprintableCharacters > 1);

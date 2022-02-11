@@ -12,7 +12,7 @@ template<typename OutputIterator>
 void
 threadWorker(OutputIterator oiter,
              std::shared_ptr<IContentFilter> contentFilter,
-             std::unique_ptr<BinaryReaderView> readerView)
+             std::unique_ptr<ReaderView> readerView)
 {
     OutputIterator outputIterator = oiter;
     while (readerView->isWorkAvailable()) {
@@ -67,7 +67,7 @@ ParallelContentProcessor<OutputIterator>::ParallelContentProcessor(
           &threadWorker<OutputIterator>,
           oiter,
           contentFilter,
-          std::make_unique<BinaryReaderView>(sharedDataPtr, numThreads, i)));
+          std::make_unique<ReaderView>(sharedDataPtr, numThreads, i)));
     }
 }
 
