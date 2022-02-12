@@ -33,7 +33,8 @@ Flexgrep::processDirectory(const path& p)
     std::error_code ec;
 
     // TODO: check if it is excluded
-    for (const auto& p : directory_iterator(p, std::filesystem::directory_options::skip_permission_denied)) {
+    for (const auto& p : directory_iterator(
+           p, std::filesystem::directory_options::skip_permission_denied, ec)) {
 
         if (p.is_symlink(ec)) {
             processSymlink(p);

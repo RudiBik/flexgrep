@@ -42,8 +42,19 @@ Run cmake and build
 <details>
 <summary>Mac</summary>
   
+Make sure xcode (build tools) + cmake are installed
+
 ```
-TODO
+git clone https://github.com/RudiBik/flexgrep.git
+cd flexgrep
+mkdir build && cd build
+cmake ..
+make
+  
+./tests/tests                                   # running unit tests
+  
+./src/flexgrep [options] rootDirectory regex    # Running the CLI application for grepping
+./src/flexgrep ~/Documents include                       # example search => Find all files containing the word 'include' in the home folder
 ```
 
 </details>
