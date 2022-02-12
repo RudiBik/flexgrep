@@ -1,4 +1,10 @@
-﻿#include <Flexgrep.hpp>
+﻿// Copyright (c) 2022, Rudi Bikschentajew
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
+
+#include <Flexgrep.hpp>
 #include <PathFilter/AlwaysMatchingFilter.hpp>
 #include <Utilities/Configuration.hpp>
 
@@ -45,12 +51,12 @@ main(int argc, char** argv)
 
     std::ostream_iterator<std::string> oiter{ std::cout };
 
-    auto opt =
-      std::make_shared<lg::Configuration>(program.get<std::string>("root"),
-                                    program.get<std::string>("--wildcard"),
-                                    program.get<std::string>("regex"),
-                                    !program.get<bool>("--dontSkipBinaries"),
-                                    !program.get<bool>("--singleThreaded"));
+    auto opt = std::make_shared<lg::Configuration>(
+      program.get<std::string>("root"),
+      program.get<std::string>("--wildcard"),
+      program.get<std::string>("regex"),
+      !program.get<bool>("--dontSkipBinaries"),
+      !program.get<bool>("--singleThreaded"));
     lg::Flexgrep flexgrep(opt, oiter);
 
     flexgrep.searchAndOutput();

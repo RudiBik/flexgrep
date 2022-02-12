@@ -143,3 +143,62 @@ To make the needed changes for extension more user friendly a plugin framework c
 Having this the library could match some keyword provided by the user configuration to a plugin. Then the appropriate plugin is loaded, the plugin specific user configuration parsed and the appropriate filters created automatically making the library very extensible for different file types and filters. Only the core tree traversal logic and it's configuration are shared between all modes and plugins.
 
 
+
+
+# Performance
+Performance is not the main goal of this project, but I tried to keep it on a reasonable level. Just out of curiosity I did a performance test on my local linux system. I compared the flexgrep tool with the default linux grep tool and ripgrep on different parts of my system to test them in different environments. The three environments are my home folder (mixed file sizes, a lot of files and very big), the .config folder (many little files, almost no binary files) and my media folder (Few but very big files).
+
+Used example commands:
+```
+time ./flexgrep ~/.config/ include > config-fg.log
+time grep -rlI include ~/.config/ > config-grep.log        // the -I argument tells grep to ignore binary files
+time rg include ~/.config/ > config-rg.log
+```
+
+| Subfilesystem  | Size (in GB) | Number of files | Num files / GB |
+| ------------- | ------------- | --------------- | ---------------- |
+| Home folder  | 48 GB  | 110.000 | 2.230 |
+| .config folder  | 1.6 GB  | 18.000 | 11.250 |
+| Media folder  | 21 GB  | 3.500 | 167 |
+
+The last colummn represents the "density" of files and is an indicator for how many binary files exist in a subfilesystem.
+
+**Runtime**
+
+Following are the runtimes in milliseconds for each tool and "dataset":
+| Tool  | Home folder | .config folder | Media folder |
+| ------------- | ------------- | --------------- | ---------------- |
+| flexgrep  | 5600  | 700 | 900 |
+| grep  | 2500  | 300 | 70 |
+| ripgrep | 100  | 260 | 20 |
+
+The main takeaways (and potential improvements) are:
+- The flexgrep tool is currently bad in filtering out binary data. This affects all three test dataset, but especially the 'Media' case
+  - The used heuristic only checks the first X bytes for '\0' characters. grep and ripgrep check for that throughout the file and filter out much more binary files on the way  
+- On normally distributed filesystems the flexgrep tool needs around 2x longer than the normal grep tool
+- ripgrep is filtering out much more data (ignoring hidden files, more binary files, ...) but also delivering less matches (but it is configurable to change that)
+
+
+**Quality**
+
+Looking at the matched output the flexgrep and grep tool deliver almost the same results. The only difference comes out of using different heuristics for detecting binary files. ~95% of matches are equal, the rest ~5% files that got filtered out by being classified as binary for both tools.
+To prove that this is the case I just deactivated the binary filter in the flexgrep tool. The result is that the amount of matched files includes all matches from the grep tool + some binary files matching the regex.
+
+The ripgrep tool is delivering in all cases much lower matches because it is using extensive filtering of files (hidden files, binary, ...).
+
+**Potential Improvements**
+
+- Improve binary classification => During regex search look out of '\0' bytes and stop processing directly when encountered (same as ripgrep logic)
+- Change the regular expression matcher. Currently using std::regex which is quite slow according to some research (e.g. [some discussions](https://www.reddit.com/r/cpp/comments/e16s1m/what_is_wrong_with_stdregex/))
+  - Try out RE2: https://github.com/google/re2
+  - Try out PCRE: http://pcre.org/
+
+
+# Third Party Libraries
+- argparse: https://github.com/p-ranav/argparse
+- GTest: https://github.com/google/googletest
+
+
+# License
+Unless otherwise noted, the Flexgrep source files are distributed
+under the BSD-style license found in the LICENSE file.

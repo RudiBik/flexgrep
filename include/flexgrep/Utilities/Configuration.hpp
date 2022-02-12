@@ -1,3 +1,9 @@
+// Copyright (c) 2022, Rudi Bikschentajew
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
+
 #pragma once
 
 #include <Utilities/Wildcard.hpp>
@@ -16,10 +22,10 @@ class Configuration
 {
   public:
     Configuration(const std::string& rootPath,
-            const std::string& filenameWildcard,
-            const std::string& regexContent,
-            bool bskipBinaries,
-            bool bParallelFiltering);
+                  const std::string& filenameWildcard,
+                  const std::string& regexContent,
+                  bool bskipBinaries,
+                  bool bParallelFiltering);
 
     // Enabling / Disabling optional features
     // ...

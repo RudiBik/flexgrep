@@ -1,3 +1,9 @@
+// Copyright (c) 2022, Rudi Bikschentajew
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
+
 #include <ContentProcessors/ParallelContentProcessor/SharedDataViews.hpp>
 
 namespace lg {
@@ -23,8 +29,8 @@ WriterView::setFinished()
 //!===============================================
 
 ReaderView::ReaderView(SharedDataSPtr dataPtr,
-                                   const int numThreads,
-                                   const int startPos)
+                       const int numThreads,
+                       const int startPos)
   : mSharedData{ dataPtr }
   , mNumAvailableFiles{ 0 }
   , mProcessingIndex{ startPos }

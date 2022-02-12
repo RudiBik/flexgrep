@@ -1,3 +1,9 @@
+// Copyright (c) 2022, Rudi Bikschentajew
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
+
 #include "Utilities/Configuration.hpp"
 
 namespace lg {
@@ -5,10 +11,10 @@ namespace lg {
 using namespace std::filesystem;
 
 Configuration::Configuration(const std::string& rootPath,
-                 const std::string& filenameWildcard,
-                 const std::string& regexContent,
-                 bool bskipBinaries,
-                 bool bParallelContentFiltering)
+                             const std::string& filenameWildcard,
+                             const std::string& regexContent,
+                             bool bskipBinaries,
+                             bool bParallelContentFiltering)
 {
     if (!exists(rootPath) || !is_directory(rootPath)) {
         // TOTO Output error message and quit

@@ -1,6 +1,11 @@
+// Copyright (c) 2022, Rudi Bikschentajew
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
+
 #include <File.hpp>
 #include <Utilities/Utilities.hpp>
-
 
 namespace lg {
 
@@ -18,14 +23,14 @@ File::File(const std::filesystem::path& p)
 
     mMetaData.filePath = p;
     mMetaData.fileSize = fileSize;
-    mMetaData.binary   = false;
+    mMetaData.binary = false;
 
-    const size_t bufferSize = std::min(mMetaData.fileSize, static_cast<size_t>(8192));
+    const size_t bufferSize =
+      std::min(mMetaData.fileSize, static_cast<size_t>(8192));
     if (bufferSize > 0) {
         std::vector<char> buffer(bufferSize);
         filestream.read(&buffer[0], bufferSize);
-        mMetaData.binary =
-          isBinaryFile(&buffer[0], bufferSize, fileSize);
+        mMetaData.binary = isBinaryFile(&buffer[0], bufferSize, fileSize);
     }
 }
 
